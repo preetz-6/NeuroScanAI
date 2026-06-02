@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NeuroScan AI — Brain Tumor Detection</title>
+  <meta name="description" content="Upload an MRI scan and get instant brain tumor classification using a ResNet-50 deep learning model with Grad-CAM explainability." />
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+
+  <!-- Toast container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <div class="container">
+
+    <!-- ============================================================== -->
+    <!-- HEADER                                                         -->
+    <!-- ============================================================== -->
+    <header class="header">
+
+      <h1 class="header__title">NeuroScan AI</h1>
+      <p class="header__subtitle">
+        Upload an MRI scan for instant brain tumor classification with
+        Grad-CAM visual explanations.
+      </p>
+    </header>
+
+    <!-- ============================================================== -->
+    <!-- UPLOAD ZONE                                                    -->
+    <!-- ============================================================== -->
+    <section class="upload-section">
+      <div class="upload-zone" id="uploadZone">
+        <div class="upload-zone__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="17 8 12 3 7 8"/>
+            <line x1="12" y1="3" x2="12" y2="15"/>
+          </svg>
+        </div>
+        <p class="upload-zone__title">Drop your MRI scan here</p>
+        <p class="upload-zone__subtitle">or click to browse files</p>
+        <button class="upload-zone__btn" type="button" id="browseBtn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+          </svg>
+          Browse Files
+        </button>
+        <p class="upload-zone__formats">Supported: JPG, PNG, BMP, TIFF, WebP · Max 10 MB</p>
+        <input type="file" id="fileInput" accept="image/*" hidden />
+      </div>
+
+      <!-- Preview -->
+      <div class="preview-container" id="previewContainer">
+        <img id="previewImage" alt="MRI Preview" />
+        <div class="preview-info">
+          <div>
+            <p class="preview-info__name" id="previewName"></p>
+            <p class="preview-info__size" id="previewSize"></p>
+          </div>
+          <button class="btn-analyze" id="analyzeBtn" type="button">
+            Analyze Scan
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- LOADING                                                        -->
+    <!-- ============================================================== -->
+    <div class="loading-overlay" id="loadingOverlay">
+      <div class="spinner"></div>
+      <p class="loading-overlay__text">Analyzing MRI scan…</p>
+      <p class="loading-overlay__subtext">Running inference &amp; generating Grad-CAM heatmap</p>
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- RESULTS                                                        -->
+    <!-- ============================================================== -->
+    <section class="results-section" id="resultsSection">
+      <div class="results-grid">
+
+        <!-- Prediction -->
+        <div class="card prediction-card">
+          <p class="card__label">Prediction</p>
+          <div class="prediction-main">
+            <div class="confidence-ring" id="confidenceRing">
+              <svg viewBox="0 0 100 100">
+                <circle class="confidence-ring__bg" cx="50" cy="50" r="42" />
+                <circle class="confidence-ring__fill" id="ringFill" cx="50" cy="50" r="42"
+                  stroke-dasharray="263.89" stroke-dashoffset="263.89" />
+              </svg>
+              <div class="confidence-ring__text">
+                <span id="confidenceValue">0%</span>
+                <small>confidence</small>
+              </div>
+            </div>
+            <div>
+              <p class="prediction-class" id="predictionClass">—</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Probabilities -->
+        <div class="card">
+          <p class="card__label">Class Probabilities</p>
+          <div class="prob-bars" id="probBars"></div>
+        </div>
+
+        <!-- Grad-CAM -->
+        <div class="card gradcam-card">
+          <p class="card__label">Grad-CAM Heatmap</p>
+          <img id="gradcamImage" alt="Grad-CAM Heatmap" />
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- HISTORY                                                        -->
+    <!-- ============================================================== -->
+    <section class="history-section" id="historySection">
+      <div class="history-section__header">
+        <h2 class="history-section__title">Scan History</h2>
+        <button class="btn-clear-history" id="clearHistoryBtn">Clear History</button>
+      </div>
+      <div id="historyContent">
+        <div class="history-empty">No scans yet. Upload an MRI to get started.</div>
+      </div>
+    </section>
+
+
+
+  </div>
+
+  <script src="/static/script.js"></script>
+</body>
+</html>
