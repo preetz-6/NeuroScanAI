@@ -1,13 +1,4 @@
 ---
-title: NeuroScan AI - Brain Tumor Detection
-emoji: 🧠
-colorFrom: gray
-colorTo: green
-sdk: docker
-app_port: 7860
-pinned: false
----
-
 # 🧠 NeuroScan AI — Brain Tumor Detection and Classification Using Deep Learning
 
 > An intelligent web-based application that classifies brain tumors from MRI scans into four categories — **Glioma**, **Meningioma**, **Pituitary Tumor**, and **No Tumor** — using a fine-tuned **ResNet-50** convolutional neural network, with **Grad-CAM++ visual explainability** to highlight the regions of the scan that influenced the model's prediction.
@@ -642,7 +633,3 @@ While not a substitute for professional medical diagnosis, NeuroScan AI serves a
 10. PyTorch Documentation. (2024). PyTorch — An Open Source Machine Learning Framework. https://pytorch.org/docs/
 
 ---
-
-<p align="center">
-  <b>NeuroScan AI</b> — Built with 🧠 Deep Learning & ❤️ for Medical AI
-</p>
